@@ -25,9 +25,11 @@ class Calculator {
     if (this.previousOperand !== '') {
       this.compute()
     }
+
     this.operation = operation
     this.previousOperand = this.currentOperand
     this.currentOperand = ''
+    
   }
 
   compute() {
@@ -51,7 +53,7 @@ class Calculator {
       default:
         return
     }
-    this.currentOperand = computation
+    this.currentOperand = computation.toFixed(2)
     this.operation = undefined
     this.previousOperand = ''
   }
@@ -109,40 +111,49 @@ button.addEventListener('click', () => {
 })
 })
 
-equalsButton.addEventListener('click', button => {
-calculator.compute()
-calculator.updateDisplay()
-})
-
-allClearButton.addEventListener('click', button => {
-calculator.clear()
-calculator.updateDisplay()
-})
-
-deleteButton.addEventListener('click', button => {
-calculator.delete()
-calculator.updateDisplay()
-})
-
-document.addEventListener('keydown', (event) => {
-if (event.key === 'Backspace') {
-  calculator.delete()
-  calculator.updateDisplay()
-}
-if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/') {
-  calculator.chooseOperation(event.key)
-  calculator.updateDisplay()
-}
-if (event.key === 'Escape') {
-  calculator.clear()
-  calculator.updateDisplay()
-}
-if (event.key === 'Enter') {
+const onEqualsButtonClick = () => {
   calculator.compute()
   calculator.updateDisplay()
 }
-if (event.key >= '0' && event.key <= '9') {
-  calculator.appendNumber(event.key)
+
+equalsButton.addEventListener('click', onEqualsButtonClick)
+
+const onAllClearButtonClick = () => {
+  calculator.clear()
   calculator.updateDisplay()
 }
-})
+
+allClearButton.addEventListener('click', onAllClearButtonClick)
+
+const onDeleteButtonClick = () => {
+  calculator.delete()
+  calculator.updateDisplay()
+}
+
+deleteButton.addEventListener('click', onDeleteButtonClick)
+
+const onDocumentKeyDown = (event) => {
+  if (event.key === 'Backspace') {
+    calculator.delete()
+    calculator.updateDisplay()
+  }
+  if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/') {
+    calculator.chooseOperation(event.key)
+    calculator.updateDisplay()
+  }
+  if (event.key === 'Escape') {
+    calculator.clear()
+    calculator.updateDisplay()
+  }
+  if (event.key === 'Enter') {
+    calculator.compute()
+    calculator.updateDisplay()
+  }
+  if (event.key >= '0' && event.key <= '9') {
+    calculator.appendNumber(event.key)
+    calculator.updateDisplay()
+  }
+}
+
+document.addEventListener('keydown', onDocumentKeyDown)
+
