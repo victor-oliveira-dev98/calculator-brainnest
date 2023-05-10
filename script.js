@@ -24,15 +24,19 @@ function calculate() {
   }
   }
 
-document.addEventListener('keydown', function(event) {
-  const key = event.key;
-  if (key === 'Delete') {
-    clearDisplay();
-  } else if (key === 'Backspace') {
-    deleteCharacter();
-  } else if (/[\d.+\-*/]/.test(key)) {
-    appendCharacter(key);
-  } else if (key === 'Enter' || key === '=') {
-    calculate();
+  function handleKeyPress(key) {
+    if (key === 'Delete') {
+      clearDisplay();
+    } else if (key === 'Backspace') {
+      deleteCharacter();
+    } else if (/[\d.+\-*/]/.test(key)) {
+      appendCharacter(key);
+    } else if (key === 'Enter' || key === '=') {
+      calculate();
+    }
   }
-});
+  
+  document.onkeydown = function(event) {
+    const key = event.key;
+    handleKeyPress(key);
+  };
